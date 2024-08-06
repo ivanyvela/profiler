@@ -89,6 +89,7 @@ class Model:
 
             if 'LINE_NO' in line:
                 row_idx = len(file_lines)
+                break
 
         # Read data into pandas data frame
         mod_df = pd.read_csv(xyz_path, delimiter=None, skiprows=row_idx)
