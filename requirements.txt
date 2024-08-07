@@ -6,3 +6,4 @@ contextily
 pandas
 geopandas
 textwrap3
+openpyxl
