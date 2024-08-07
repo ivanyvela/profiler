@@ -215,13 +215,30 @@ class Model:
 
             for profile_coord_path in profile_coord_paths:
 
-                profile_coord = pd.read_csv(profile_coord_path).iloc[:, 0:2].values
+                # Read the CSV file into a DataFrame
+                df = pd.read_csv(profile_coord_path)
 
-                profile = {}
-                profile['x'] = profile_coord[:, 0]
-                profile['y'] = profile_coord[:, 1]
+                # Initialize variables for x and y columns
+                x_col = None
+                y_col = None
 
-                self.profiles.append(profile)
+                # Loop through the columns to find the ones that match 'X'/'x' and 'Y'/'y'
+                for col in df.columns:
+                    if col.lower() == 'x':
+                        x_col = col
+                    elif col.lower() == 'y':
+                        y_col = col
+
+                # If both x and y columns are found, extract the values
+                if x_col and y_col:
+                    profile = {}
+                    profile['x'] = df[x_col].values
+                    profile['y'] = df[y_col].values
+
+                    # Append the profile to the profiles list
+                    self.profiles.append(profile)
+                else:
+                    print(f"Error: Could not find 'X' and 'Y' columns in {profile_coord_path}")
 
         elif file_type == 'shp':
 
